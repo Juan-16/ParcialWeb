@@ -6,7 +6,7 @@ export class Battle {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @ManyToOne(() => Slave, { nullable: false }) // Relación con los esclavos
+    @ManyToOne(() => Slave, { nullable: false }) 
     contestant_1: Slave;
 
     @ManyToOne(() => Slave, { nullable: false })
@@ -16,11 +16,11 @@ export class Battle {
     winner: Slave;
 
     @Column('text', { nullable: false })
-    injuries: string; // Descripción de los daños
+    injuries: string; 
 
     @CreateDateColumn({
         type: 'timestamp',
-        default: () => "CURRENT_TIMESTAMP" // ✅ Corrección
+        default: () => "CURRENT_TIMESTAMP" 
     })
-    date: Date; // Fecha de la pelea
+    date: Date; 
 }

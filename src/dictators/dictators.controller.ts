@@ -29,7 +29,7 @@ addSlave(
 
   @Get('profile')
   getProfile(@Request() req) {
-    return req.user; // 🔥 El dictador autenticado
+    return req.user; //El dictador autenticado
   }
 
   @Get(':id/slaves')

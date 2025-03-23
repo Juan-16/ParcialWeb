@@ -39,7 +39,7 @@ export class Slave {
     })  
     losses:number;
     @Column({
-        type: "enum",   // 👈 Hace que 'status' sea un enum en la base de datos
+        type: "enum",   
         enum: Status,
         default: Status.ALIVE,
     })

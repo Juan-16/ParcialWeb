@@ -8,17 +8,17 @@ export class CreateDictatorDto {
   territory: string;
 
   @IsInt()
-  @Min(0) // No puede tener esclavos negativos
+  @Min(0) 
   number_of_slaves: number;
 
   @IsInt()
   @Min(1)
-  @Max(100) // Lealtad entre 1 y 100
+  @Max(100) 
   loyalty: number;
 
   @IsOptional()
   @IsString()
-  role?: string; // Se asignará automáticamente en el servicio
+  role?: string; 
 }
 
 

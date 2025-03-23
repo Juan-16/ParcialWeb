@@ -9,8 +9,8 @@ import { Dictator } from 'src/dictators/entities/dictator.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Battle, Slave, Dictator]), // 🔥 Aquí solo van entidades
-    DictatorsModule, // 🔥 Ahora sí está correctamente importado el módulo
+    TypeOrmModule.forFeature([Battle, Slave, Dictator]), 
+    DictatorsModule, 
   ],
   controllers: [BattlesController],
   providers: [BattlesService],

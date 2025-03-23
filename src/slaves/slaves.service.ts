@@ -20,7 +20,7 @@ export class SlavesService {
   }
 
   async findAll(): Promise<Slave[]> {
-    return await this.slaveRepository.find(); // 🔹 Obtiene todos los registros desde Supabase
+    return await this.slaveRepository.find(); // Obtiene todos los registros desde Supabase
   }
 
   async findOne(id: string): Promise<Slave> {

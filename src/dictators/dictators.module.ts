@@ -14,7 +14,7 @@ import { SlavesService } from 'src/slaves/slaves.service';
 @Module({
   imports: [
     TypeOrmModule.forFeature([Dictator, Slave]),ConfigModule,
-    SlavesModule, // Importamos el módulo de esclavos
+    SlavesModule, 
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.registerAsync({
       imports: [ConfigModule],

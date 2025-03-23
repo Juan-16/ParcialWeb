@@ -9,7 +9,7 @@ export class BattlesController {
   constructor(private readonly battlesService: BattlesService) {}
 
   @Post()
-  @UseGuards(AuthGuard('jwt')) // 🔥 Protegido con JWT
+  @UseGuards(AuthGuard('jwt')) 
   async create(@Body() { dictatorId, ...createBattleDto }: { dictatorId: string } & CreateBattleDto) {
     return await this.battlesService.create(dictatorId, createBattleDto);
   }

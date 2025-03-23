@@ -3,17 +3,17 @@ import { IsUUID, IsString, IsOptional, IsDate, IsISO8601, IsDateString } from 'c
 
 export class CreateBattleDto {
   @IsUUID()
-  readonly contestant_1: string; // ID del primer luchador
+  readonly contestant_1: string; 
 
   @IsUUID()
-  readonly contestant_2: string; // ID del segundo luchador
+  readonly contestant_2: string; 
 
   @IsUUID()
-  @IsOptional() // Puede ser nulo hasta que haya un ganador
+  @IsOptional() 
   readonly winner_id?: string;
 
   @IsString()
-  readonly injuries: string; // Reporte de daños en la batalla
+  readonly injuries: string; 
   
   @IsDateString() 
   readonly date: string;

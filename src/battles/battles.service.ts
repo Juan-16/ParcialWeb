@@ -21,18 +21,18 @@ export class BattlesService {
   async create(dictatorId: string, createBattleDto: CreateBattleDto) {
     const { contestant_1, contestant_2, winner_id, injuries } = createBattleDto;
 
-    // 🔹 Buscar al dictador que intenta crear la batalla
+    // Buscar al dictador que intenta crear la batalla
     const dictator = await this.dictatorsRepository.findOne({ where: { id: dictatorId } });
     if (!dictator) {
       throw new UnauthorizedException('Dictador no encontrado');
     }
 
-    // 🔹 Verificar que sea admin
+    // Verificar que sea admin
     if (dictator.role !== 'admin') {
       throw new UnauthorizedException('Solo los administradores pueden crear batallas');
     }
 
-    // 🔹 Buscar combatientes
+    //  Buscar combatientes
     const contestant1 = await this.slaveRepository.findOne({ where: { id: contestant_1 } });
     const contestant2 = await this.slaveRepository.findOne({ where: { id: contestant_2 } });
 
@@ -40,7 +40,7 @@ export class BattlesService {
       throw new NotFoundException('Uno o ambos combatientes no existen');
     }
 
-    // 🔹 Buscar ganador
+    // Buscar ganador
     let winner: Slave | null = null;
     if (winner_id) {
       winner = await this.slaveRepository.findOne({ where: { id: winner_id } });
@@ -51,7 +51,7 @@ export class BattlesService {
       throw new BadRequestException('Debe especificarse un ganador');
     }
 
-    // 🔹 Crear batalla
+    // Crear batalla
     const battle = this.battleRepository.create({
       contestant_1: contestant1,
       contestant_2: contestant2,
@@ -61,7 +61,7 @@ export class BattlesService {
 
     await this.battleRepository.save(battle);
 
-    // 🔹 Actualizar estadísticas
+    // Actualizar estadísticas
     if (winner.id === contestant1.id) {
       contestant1.wins++;
       contestant2.losses++;

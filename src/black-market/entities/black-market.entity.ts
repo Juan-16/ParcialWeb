@@ -27,6 +27,6 @@ export class BlackMarketTransaction {
   @Column({ type: 'enum', enum: ['Completed', 'Failed', 'Discovered'] })
   status: string;
 
-  @Column({ default: false }) // Nuevo campo para indicar si es un pago de rescate
+  @Column({ default: false }) 
   isRansom: boolean;
 }

@@ -70,7 +70,7 @@ export class DictatorsService {
   async getSlavesOfDictator(dictatorId: string): Promise<Slave[]> {
     const dictator = await this.dictatorsRepository.findOne({
       where: { id: dictatorId },
-      relations: ['slaves'], // Cargar la relación
+      relations: ['slaves'], 
     });
   
     if (!dictator) {
