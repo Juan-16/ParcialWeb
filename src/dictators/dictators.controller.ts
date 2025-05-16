@@ -1,10 +1,10 @@
-import { Controller, Post, Body, Get, UseGuards, Request, Param } from '@nestjs/common';
+import { Controller, Post, Body, Get, UseGuards, Request, Param,Delete } from '@nestjs/common';
 import { DictatorsService } from './dictators.service';
 import { CreateDictatorDto } from './dto/create-dictator.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { Dictator } from './entities/dictator.entity';
 import { CreateSlaveDto } from 'src/slaves/dto/create-slave.dto';
-
+import { LoginDto } from './dto/login.dto'; 
 @Controller('dictators')
 export class DictatorsController {
   constructor(private readonly dictatorsService: DictatorsService) {}
@@ -23,18 +23,33 @@ addSlave(
   }
 
   @Post('login')
-  login(@Body('name') name: string) {
-    return this.dictatorsService.login(name);
-  }
+async login(@Body() loginDto: LoginDto) {
+  return this.dictatorsService.login(loginDto.name, loginDto.password);  // Usamos 'name' en lugar de 'username'
+}
 
   @Get('profile')
   getProfile(@Request() req) {
     return req.user; //El dictador autenticado
   }
 
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.dictatorsService.findOne(id);
+  }
+
   @Get(':id/slaves')
   async getSlaves(@Param('id') dictatorId: string) {
     return this.dictatorsService.getSlavesOfDictator(dictatorId);
+  }
+
+  @Delete(':id')
+  async deleteDictator(@Param('id') id: string): Promise<void> {
+    await this.dictatorsService.delete(id);  // Llamada al servicio para eliminar el dictador
+  }
+
+  @Post(':dictatorId/assign-slave/:slaveId')
+  assignSlave(@Param('dictatorId') dictatorId: string, @Param('slaveId') slaveId: string) {
+    return this.dictatorsService.assignSlave(dictatorId, slaveId);
   }
 
   @Get()

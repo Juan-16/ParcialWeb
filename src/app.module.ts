@@ -19,7 +19,7 @@ console.log('DATABASE_URL:', process.env.DATABASE_URL); // Agregado aquí
       type: 'postgres',
       url: process.env.DATABASE_URL,
       autoLoadEntities: true,
-      synchronize: false,
+      synchronize: true,
     }),
      
     BattlesModule,

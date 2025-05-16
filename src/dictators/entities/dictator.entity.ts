@@ -11,6 +11,7 @@ export class Dictator {
   @Column()
   name: string;
 
+
   @Column()
   territory: string;
 
@@ -24,6 +25,10 @@ export class Dictator {
     default:'Admin'
 })
   role?:string;
+
+  @Column({ nullable: false })
+  @Exclude() // Oculta la contraseña en respuestas automáticas
+  password: string;
 
   @Exclude()
   @OneToMany(() => Slave, (slave) => slave.dictator, { cascade: true })

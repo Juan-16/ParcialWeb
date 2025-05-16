@@ -19,6 +19,9 @@ export class CreateDictatorDto {
   @IsOptional()
   @IsString()
   role?: string; 
+
+  @IsString()
+  password: string;
 }
 
 
