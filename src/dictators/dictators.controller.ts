@@ -4,10 +4,15 @@ import { CreateDictatorDto } from './dto/create-dictator.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { Dictator } from './entities/dictator.entity';
 import { CreateSlaveDto } from 'src/slaves/dto/create-slave.dto';
-import { LoginDto } from './dto/login.dto'; 
+import { LoginDto } from './dto/login.dto';
+import { SlavesService } from 'src/slaves/slaves.service'; // Ajusta la ruta 
+
 @Controller('dictators')
 export class DictatorsController {
-  constructor(private readonly dictatorsService: DictatorsService) {}
+  constructor(
+    private readonly dictatorsService: DictatorsService,
+    private readonly slavesService: SlavesService, // <-- Aquí lo agregas
+  ) {}
 
   @Post(':id/slaves')
 addSlave(
@@ -15,6 +20,7 @@ addSlave(
   @Body() createSlaveDto: CreateSlaveDto
 ) {
   return this.dictatorsService.addSlave(dictatorId, createSlaveDto);
+  
 }
 
   @Post()
@@ -22,15 +28,16 @@ addSlave(
     return this.dictatorsService.create(createDictatorDto);
   }
 
-  @Post('login')
+ @Post('login')
 async login(@Body() loginDto: LoginDto) {
-  return this.dictatorsService.login(loginDto.name, loginDto.password);  // Usamos 'name' en lugar de 'username'
+  return this.dictatorsService.login(loginDto.name, loginDto.password);
 }
 
   @Get('profile')
   getProfile(@Request() req) {
     return req.user; //El dictador autenticado
   }
+
 
   @Get(':id')
   findOne(@Param('id') id: string) {
@@ -56,4 +63,6 @@ async login(@Body() loginDto: LoginDto) {
   async findAll(): Promise<Dictator[]> {
     return this.dictatorsService.findAll();
   }
+
+  
 }

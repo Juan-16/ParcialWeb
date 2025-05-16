@@ -9,5 +9,6 @@ import { Slave } from './entities/slave.entity';
   imports: [TypeOrmModule.forFeature([Slave])],
   controllers: [SlavesController],
   providers: [SlavesService],
+  exports: [SlavesService],  // IMPORTANTE exportarlo para que otros módulos lo usen
 })
 export class SlavesModule {}

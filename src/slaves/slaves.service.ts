@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateSlaveDto } from './dto/create-slave.dto';
 import { UpdateSlaveDto } from './dto/update-slave.dto';
-import { Repository } from 'typeorm';
+import { Repository,IsNull } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Slave } from './entities/slave.entity';
 
@@ -46,6 +46,24 @@ async update(id: string, updateSlaveDto: UpdateSlaveDto) {
   return await this.slaveRepository.findOne({ where: { id } });
 }
 
+async updateStatus(id: string, status: string): Promise<Slave> {
+  const slave = await this.slaveRepository.findOne({ where: { id } });
+
+  if (!slave) {
+    throw new NotFoundException(`Slave with ID ${id} not found`);
+  }
+
+  // Opcional: valida que el status sea válido
+  const validStatuses = ['alive', 'dead', 'escaped', 'free'];
+  if (!validStatuses.includes(status)) {
+    throw new Error('Estado inválido');
+  }
+
+  slave.status = status as any; // si tienes enum Status, convierte correctamente
+  await this.slaveRepository.save(slave);
+  return slave;
+}
+
 async remove(id: string) {
   const slave = await this.slaveRepository.findOne({ where: { id } });
 
@@ -56,4 +74,10 @@ async remove(id: string) {
   await this.slaveRepository.delete(id);
   return { message: `Slave with ID ${id} removed` };
 }
+
+  async findUnassigned(): Promise<Slave[]> {
+    return this.slaveRepository.find({
+      where: { dictator: IsNull() },
+    });
+  }
 }

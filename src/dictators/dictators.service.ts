@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository,IsNull } from 'typeorm';
 import { Dictator } from './entities/dictator.entity';
 import { JwtPayload } from 'src/interface/JwtPayload';
 import { CreateSlaveDto } from 'src/slaves/dto/create-slave.dto';
@@ -82,13 +82,14 @@ export class DictatorsService {
   
     return {
       message: 'Login successful',
-      token: token
+      token: token,
+      id: dictator.id  
     };
   }
 
   async create(dictatorData: Partial<Dictator>) {
     const existingDictators = await this.dictatorsRepository.count();
-    const { loyalty_to_Carolina = 50, password } = dictatorData;
+    const { loyalty = 50, password } = dictatorData;
   
     if (!password) {
       throw new Error('Password is required');
@@ -100,7 +101,7 @@ export class DictatorsService {
       ...dictatorData,
       password: hashedPassword,
       role: existingDictators === 0 ? 'admin' : 'dictator',
-      loyalty_to_Carolina,
+      loyalty,
     });
   
     return this.dictatorsRepository.save(newDictator);
@@ -133,4 +134,6 @@ export class DictatorsService {
 
     await this.dictatorsRepository.remove(dictator);  // Elimina el dictador
   }
+
+ 
 }

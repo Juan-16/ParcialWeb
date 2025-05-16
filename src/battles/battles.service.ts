@@ -27,10 +27,10 @@ export class BattlesService {
       throw new UnauthorizedException('Dictador no encontrado');
     }
 
-    // Verificar que sea admin
-    if (dictator.role !== 'admin') {
-      throw new UnauthorizedException('Solo los administradores pueden crear batallas');
-    }
+   // Verificar que tenga role y que sea admin o dictator
+if (!dictator.role || !['admin', 'dictator'].includes(dictator.role)) {
+  throw new UnauthorizedException('No tienes permiso para crear batallas');
+}
 
     //  Buscar combatientes
     const contestant1 = await this.slaveRepository.findOne({ where: { id: contestant_1 } });

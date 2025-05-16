@@ -19,7 +19,7 @@ export class Dictator {
   number_of_slaves: number;
 
   @Column()
-  loyalty_to_Carolina: number;
+  loyalty: number;
 
   @Column('text',{
     default:'Admin'
